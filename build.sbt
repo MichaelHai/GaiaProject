@@ -1,7 +1,18 @@
-name := "Gaia Project"
+import Dependencies._
+import Common._
 
-version := "1.0"
 
-scalaVersion := "2.12.1"
+lazy val commonSettings = Defaults.coreDefaultSettings ++ Seq(
+  version := "1.0",
+  scalaVersion := "2.12.1",
+  libraryDependencies ++= commonDep
+)
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+lazy val root = (project in file("."))
+  .settings(commonSettings)
+  .settings(name := namePrefix)
+  .aggregate(core)
+
+lazy val core = project
+  .settings(commonSettings)
+  .settings(name := namePrefix + " Core")
