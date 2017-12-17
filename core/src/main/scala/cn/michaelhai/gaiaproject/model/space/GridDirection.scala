@@ -12,8 +12,8 @@ case class UP() extends GridDirection {
   override def oppositeDirection: GridDirection = DOWN()
 
   override def neighbourRelativeDirections(): Seq[RelativeDirection] = Seq(
-    RelativeDirection(UP_LEFT(), UP_RIGHT()),
-    RelativeDirection(UP_RIGHT(), UP_LEFT())
+    RelativeDirection(UP_LEFT(), DOWN_LEFT()),
+    RelativeDirection(UP_RIGHT(), DOWN_RIGHT())
   )
 }
 
@@ -48,7 +48,7 @@ case class DOWN_LEFT() extends GridDirection {
   override def oppositeDirection: GridDirection = UP_RIGHT()
 
   override def neighbourRelativeDirections(): Seq[RelativeDirection] = Seq(
-    RelativeDirection(DOWN(), DOWN_LEFT()),
+    RelativeDirection(DOWN(), DOWN_RIGHT()),
     RelativeDirection(UP_LEFT(), UP())
   )
 }

@@ -37,4 +37,27 @@ class AbstractSpaceGridTest extends FlatSpec with OneInstancePerTest {
       case _: AdjacentGridAlreadyExistException =>
     }
   }
+
+  it can "add a third grid adjacent to both" in {
+    val upNeighbour = new AbstractSpaceGrid {}
+    val upRightNeighbour = new AbstractSpaceGrid {}
+    val downLeftNeighbour = new AbstractSpaceGrid {}
+    val upLeftNeighbour = new AbstractSpaceGrid {}
+
+    spaceGrid.addAdjacentGrid(UP(), upNeighbour)
+    spaceGrid.addAdjacentGrid(UP_RIGHT(), upRightNeighbour)
+    spaceGrid.addAdjacentGrid(DOWN_LEFT(), downLeftNeighbour)
+    spaceGrid.addAdjacentGrid(UP_LEFT(), upLeftNeighbour)
+
+    upNeighbour.adjacentGrids.get(DOWN_RIGHT()) should be(Some(upRightNeighbour))
+    upNeighbour.adjacentGrids.get(DOWN_LEFT()) should be(Some(upLeftNeighbour))
+    upRightNeighbour.adjacentGrids.get(UP_LEFT()) should be(Some(upNeighbour))
+    upLeftNeighbour.adjacentGrids.get(UP_RIGHT()) should be(Some(upNeighbour))
+    upLeftNeighbour.adjacentGrids.get(DOWN()) should be(Some(downLeftNeighbour))
+    downLeftNeighbour.adjacentGrids.get(UP()) should be(Some(upLeftNeighbour))
+
+    downLeftNeighbour.adjacentGrids.get(DOWN_RIGHT()) should be(None)
+    spaceGrid.adjacentGrids.get(DOWN()) should be(None)
+
+  }
 }

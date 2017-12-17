@@ -18,9 +18,9 @@ class GridDirectionTest extends FlatSpec {
   it should "have correct neighbour relative positions" in {
     val upNeighbourRelativeDirections = UP().neighbourRelativeDirections()
     upNeighbourRelativeDirections.head.neighbourDirection should be(UP_LEFT())
-    upNeighbourRelativeDirections.head.relativeDirection should be(UP_RIGHT())
+    upNeighbourRelativeDirections.head.relativeDirection should be(DOWN_LEFT())
     upNeighbourRelativeDirections(1).neighbourDirection should be(UP_RIGHT())
-    upNeighbourRelativeDirections(1).relativeDirection should be(UP_LEFT())
+    upNeighbourRelativeDirections(1).relativeDirection should be(DOWN_RIGHT())
 
     val upRightNeighbourRelativeDirections = UP_RIGHT().neighbourRelativeDirections()
     upRightNeighbourRelativeDirections.head.neighbourDirection should be(UP())
@@ -42,7 +42,7 @@ class GridDirectionTest extends FlatSpec {
 
     val downLeftNeighbourRelativeDirections = DOWN_LEFT().neighbourRelativeDirections()
     downLeftNeighbourRelativeDirections.head.neighbourDirection should be(DOWN())
-    downLeftNeighbourRelativeDirections.head.relativeDirection should be(DOWN_LEFT())
+    downLeftNeighbourRelativeDirections.head.relativeDirection should be(DOWN_RIGHT())
     downLeftNeighbourRelativeDirections(1).neighbourDirection should be(UP_LEFT())
     downLeftNeighbourRelativeDirections(1).relativeDirection should be(UP())
 
