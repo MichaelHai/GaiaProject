@@ -1,6 +1,29 @@
 package cn.michaelhai.gaiaproject.model.space
 
-object GridDirection extends Enumeration {
-  type GridDirection = Value
-  val UP, UP_RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, UP_LEFT = Value
+sealed trait GridDirection {
+  def oppositeDirection: GridDirection
+}
+
+case class UP() extends GridDirection {
+  override def oppositeDirection: GridDirection = DOWN()
+}
+
+case class UP_RIGHT() extends GridDirection {
+  override def oppositeDirection: GridDirection = DOWN_LEFT()
+}
+
+case class DOWN_RIGHT() extends GridDirection {
+  override def oppositeDirection: GridDirection = UP_LEFT()
+}
+
+case class DOWN() extends GridDirection {
+  override def oppositeDirection: GridDirection = UP()
+}
+
+case class DOWN_LEFT() extends GridDirection {
+  override def oppositeDirection: GridDirection = UP_RIGHT()
+}
+
+case class UP_LEFT() extends GridDirection {
+  override def oppositeDirection: GridDirection = DOWN_RIGHT()
 }
