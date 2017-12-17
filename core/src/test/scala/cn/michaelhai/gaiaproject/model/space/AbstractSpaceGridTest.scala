@@ -5,7 +5,7 @@ import org.scalatest.Matchers._
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 
 class AbstractSpaceGridTest extends FlatSpec with OneInstancePerTest with MockFactory {
-  var spaceGrid: AbstractSpaceGrid = new AbstractSpaceGrid {}
+  val spaceGrid: AbstractSpaceGrid = new AbstractSpaceGrid {}
 
   behavior of "AbstractSpaceGrid"
 
