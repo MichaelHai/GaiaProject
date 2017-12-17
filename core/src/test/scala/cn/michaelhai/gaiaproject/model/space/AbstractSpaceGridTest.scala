@@ -2,16 +2,14 @@ package cn.michaelhai.gaiaproject.model.space
 
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.Matchers._
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import org.scalatest.{FlatSpec, OneInstancePerTest}
 
-class AbstractSpaceGridTest extends FunSuite with BeforeAndAfter with MockFactory {
-  var spaceGrid: AbstractSpaceGrid = _
+class AbstractSpaceGridTest extends FlatSpec with OneInstancePerTest with MockFactory {
+  var spaceGrid: AbstractSpaceGrid = new AbstractSpaceGrid {}
 
-  before {
-    spaceGrid = new AbstractSpaceGrid {}
-  }
+  behavior of "AbstractSpaceGrid"
 
-  test("new SpaceGrid should have None for adjacent grids") {
+  it should "have None for adjacent grids after initialization" in {
     spaceGrid.adjacentGrids.get(UP()) should be(None)
     spaceGrid.adjacentGrids.get(UP_RIGHT()) should be(None)
     spaceGrid.adjacentGrids.get(DOWN_RIGHT()) should be(None)
@@ -20,7 +18,7 @@ class AbstractSpaceGridTest extends FunSuite with BeforeAndAfter with MockFactor
     spaceGrid.adjacentGrids.get(UP_LEFT()) should be(None)
   }
 
-  test("SpaceGrid can be added as down neighbour of another") {
+  it can "added another as down neighbour" in {
     val downNeighbour = mock[SpaceGrid]
 
     (downNeighbour.addAdjacentGrid _).expects(UP(), spaceGrid)
