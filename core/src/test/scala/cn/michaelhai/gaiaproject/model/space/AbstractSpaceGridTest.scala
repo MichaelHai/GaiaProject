@@ -3,6 +3,8 @@ package cn.michaelhai.gaiaproject.model.space
 import org.scalatest.Matchers._
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 
+import scala.util.Failure
+
 class AbstractSpaceGridTest extends FlatSpec with OneInstancePerTest {
   val spaceGrid: AbstractSpaceGrid = new AbstractSpaceGrid {}
 
@@ -30,12 +32,7 @@ class AbstractSpaceGridTest extends FlatSpec with OneInstancePerTest {
 
     spaceGrid.addAdjacentGrid(DOWN(), downNeighbour)
 
-    try {
-      spaceGrid.addAdjacentGrid(DOWN(), faultNeighbour)
-      fail()
-    } catch {
-      case _: AdjacentGridAlreadyExistException =>
-    }
+    spaceGrid.addAdjacentGrid(DOWN(), faultNeighbour) should be(Failure(AdjacentGridAlreadyExistException()))
   }
 
   it can "add a third grid adjacent to both" in {

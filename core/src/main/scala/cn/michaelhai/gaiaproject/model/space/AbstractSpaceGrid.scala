@@ -1,13 +1,14 @@
 package cn.michaelhai.gaiaproject.model.space
 
 import scala.collection.mutable
+import scala.util.{Failure, Success, Try}
 
 abstract class AbstractSpaceGrid() extends SpaceGrid {
   private val _adjacentGrids: mutable.Map[GridDirection, SpaceGrid] = collection.mutable.Map.empty[GridDirection, SpaceGrid]
 
   override def adjacentGrids: mutable.Map[GridDirection, SpaceGrid] = _adjacentGrids
 
-  override def addAdjacentGrid(gridDirection: GridDirection, adjacentGrid: SpaceGrid): Unit = {
+  override def addAdjacentGrid(gridDirection: GridDirection, adjacentGrid: SpaceGrid): Try[Unit] = {
     val neighbour = _adjacentGrids.getOrElse(gridDirection, {
       _adjacentGrids.put(gridDirection, adjacentGrid)
       adjacentGrid.addAdjacentGrid(gridDirection.oppositeDirection, this)
@@ -15,7 +16,7 @@ abstract class AbstractSpaceGrid() extends SpaceGrid {
       adjacentGrid
     })
 
-    if (neighbour != adjacentGrid) throw AdjacentGridAlreadyExistException()
+    if (neighbour != adjacentGrid) Failure(AdjacentGridAlreadyExistException()) else Success()
   }
 
   private def addToNeighbour(gridDirection: GridDirection, adjacentGrid: SpaceGrid): Unit = {
