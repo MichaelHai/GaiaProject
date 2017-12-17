@@ -1,10 +1,9 @@
 package cn.michaelhai.gaiaproject.model.space
 
-import org.scalamock.scalatest.MockFactory
 import org.scalatest.Matchers._
 import org.scalatest.{FlatSpec, OneInstancePerTest}
 
-class AbstractSpaceGridTest extends FlatSpec with OneInstancePerTest with MockFactory {
+class AbstractSpaceGridTest extends FlatSpec with OneInstancePerTest {
   val spaceGrid: AbstractSpaceGrid = new AbstractSpaceGrid {}
 
   behavior of "AbstractSpaceGrid"
@@ -19,12 +18,23 @@ class AbstractSpaceGridTest extends FlatSpec with OneInstancePerTest with MockFa
   }
 
   it can "added another as down neighbour" in {
-    val downNeighbour = mock[SpaceGrid]
-
-    (downNeighbour.addAdjacentGrid _).expects(UP(), spaceGrid)
-
+    val downNeighbour = new AbstractSpaceGrid {}
     spaceGrid.addAdjacentGrid(DOWN(), downNeighbour)
 
     spaceGrid.adjacentGrids.get(DOWN()) should be(Some(downNeighbour))
+  }
+
+  it should "throw Exception when adding to a direction exists grid" in {
+    val downNeighbour = new AbstractSpaceGrid {}
+    val faultNeighbour = new AbstractSpaceGrid {}
+
+    spaceGrid.addAdjacentGrid(DOWN(), downNeighbour)
+
+    try {
+      spaceGrid.addAdjacentGrid(DOWN(), faultNeighbour)
+      fail()
+    } catch {
+      case _: AdjacentGridAlreadyExistException =>
+    }
   }
 }

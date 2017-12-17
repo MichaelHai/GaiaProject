@@ -8,8 +8,17 @@ abstract class AbstractSpaceGrid() extends SpaceGrid {
   override def adjacentGrids: mutable.Map[GridDirection, SpaceGrid] = _adjacentGrids
 
   override def addAdjacentGrid(gridDirection: GridDirection, adjacentGrid: SpaceGrid): Unit = {
-    _adjacentGrids += (gridDirection -> adjacentGrid)
-    adjacentGrid.addAdjacentGrid(gridDirection.oppositeDirection, this)
+    addEachOther(gridDirection, adjacentGrid)
+  }
+
+  private def addEachOther(gridDirection: GridDirection, adjacentGrid: SpaceGrid) = {
+    val neighbour = _adjacentGrids.getOrElse(gridDirection, {
+      _adjacentGrids.put(gridDirection, adjacentGrid)
+      adjacentGrid.addAdjacentGrid(gridDirection.oppositeDirection, this)
+      adjacentGrid
+    })
+
+    if (neighbour != adjacentGrid) throw AdjacentGridAlreadyExistException()
   }
 }
 
